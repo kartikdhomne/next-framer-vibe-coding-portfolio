@@ -1,49 +1,41 @@
 
-import { useEffect, useState } from "react";
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Hero = () => {
-  const [text, setText] = useState("");
-  const [showElements, setShowElements] = useState({
-    title: false,
-    typewriter: false,
-    description: false,
-    social: false,
-    button: false,
-    arrow: false
-  });
-  
-  const fullText = "Frontend Developer";
-  
-  useEffect(() => {
-    // Stagger the animations
-    const timeouts = [
-      setTimeout(() => setShowElements(prev => ({ ...prev, title: true })), 200),
-      setTimeout(() => setShowElements(prev => ({ ...prev, typewriter: true })), 800),
-      setTimeout(() => setShowElements(prev => ({ ...prev, description: true })), 1400),
-      setTimeout(() => setShowElements(prev => ({ ...prev, social: true })), 2000),
-      setTimeout(() => setShowElements(prev => ({ ...prev, button: true })), 2400),
-      setTimeout(() => setShowElements(prev => ({ ...prev, arrow: true })), 2800),
-    ];
-
-    return () => timeouts.forEach(clearTimeout);
-  }, []);
-  
-  useEffect(() => {
-    if (!showElements.typewriter) return;
-    
-    let i = 0;
-    const timer = setInterval(() => {
-      if (i < fullText.length) {
-        setText(fullText.slice(0, i + 1));
-        i++;
-      } else {
-        clearInterval(timer);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.2
       }
-    }, 100);
-    
-    return () => clearInterval(timer);
-  }, [showElements.typewriter]);
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const typewriterVariants = {
+    hidden: { width: 0 },
+    visible: {
+      width: "100%",
+      transition: {
+        duration: 2,
+        ease: "easeInOut"
+      }
+    }
+  };
 
   const scrollToAbout = () => {
     const aboutSection = document.getElementById("about");
@@ -53,58 +45,135 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative px-4">
-      <div className="text-center max-w-4xl mx-auto">
+    <section id="home" className="min-h-screen flex items-center justify-center relative px-4 overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 180, 360],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            rotate: [360, 180, 0],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+      </div>
+
+      <motion.div 
+        className="text-center max-w-4xl mx-auto z-10"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="mb-8">
-          <h1 className={`text-5xl md:text-7xl font-bold text-white mb-4 transition-all duration-1000 transform ${showElements.title ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
+          <motion.h1 
+            className="text-5xl md:text-7xl font-bold text-white mb-4"
+            variants={itemVariants}
+          >
             Hi, I'm{" "}
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
+            <motion.span 
+              className="bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               Alex
-            </span>
-          </h1>
-          <div className={`text-2xl md:text-3xl text-slate-300 mb-6 h-12 transition-all duration-1000 transform ${showElements.typewriter ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
-            <span className="border-r-2 border-purple-400 pr-1 animate-pulse">
-              {text}
-            </span>
-          </div>
-          <p className={`text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed transition-all duration-1000 transform ${showElements.description ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
+            </motion.span>
+          </motion.h1>
+          
+          <motion.div 
+            className="text-2xl md:text-3xl text-slate-300 mb-6 h-12 overflow-hidden"
+            variants={itemVariants}
+          >
+            <motion.div
+              className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-semibold"
+              variants={typewriterVariants}
+              style={{ whiteSpace: "nowrap" }}
+            >
+              Frontend Developer
+            </motion.div>
+          </motion.div>
+          
+          <motion.p 
+            className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed"
+            variants={itemVariants}
+          >
             I create beautiful, responsive, and user-friendly web applications 
             using modern technologies like React, TypeScript, and Tailwind CSS.
-          </p>
+          </motion.p>
         </div>
         
         <div className="mb-12">
-          <div className={`flex justify-center space-x-6 mb-8 transition-all duration-1000 transform ${showElements.social ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
+          <motion.div 
+            className="flex justify-center space-x-6 mb-8"
+            variants={itemVariants}
+          >
             {[
-              { icon: Github, href: "https://github.com" },
-              { icon: Linkedin, href: "https://linkedin.com" },
-              { icon: Mail, href: "mailto:contact@example.com" }
+              { icon: Github, href: "https://github.com", color: "hover:bg-slate-700" },
+              { icon: Linkedin, href: "https://linkedin.com", color: "hover:bg-blue-600" },
+              { icon: Mail, href: "mailto:contact@example.com", color: "hover:bg-red-600" }
             ].map((social, index) => (
-              <a
+              <motion.a
                 key={index}
                 href={social.href}
                 target={social.icon !== Mail ? "_blank" : undefined}
                 rel={social.icon !== Mail ? "noopener noreferrer" : undefined}
-                className="p-3 bg-slate-800 hover:bg-slate-700 rounded-full transition-all duration-300 hover:scale-110 group"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={`p-4 bg-slate-800/50 backdrop-blur-sm rounded-full border border-slate-700 transition-all duration-300 ${social.color}`}
+                whileHover={{ 
+                  scale: 1.1,
+                  y: -5,
+                  boxShadow: "0 10px 30px rgba(139, 92, 246, 0.3)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 + index * 0.1 }}
               >
-                <social.icon className="w-6 h-6 text-slate-300 group-hover:text-white" />
-              </a>
+                <social.icon className="w-6 h-6 text-slate-300" />
+              </motion.a>
             ))}
-          </div>
+          </motion.div>
           
-          <button className={`px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-full hover:from-purple-600 hover:to-pink-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-purple-500/25 transform ${showElements.button ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
-            View My Work
-          </button>
+          <motion.button 
+            className="group relative px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-full overflow-hidden"
+            variants={itemVariants}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600"
+              initial={{ x: "-100%" }}
+              whileHover={{ x: 0 }}
+              transition={{ duration: 0.3 }}
+            />
+            <span className="relative z-10">View My Work</span>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
       
-      <button
+      <motion.button
         onClick={scrollToAbout}
-        className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce transition-all duration-1000 ${showElements.arrow ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        whileHover={{ scale: 1.2 }}
       >
         <ChevronDown className="w-8 h-8 text-slate-400 hover:text-white transition-colors duration-200" />
-      </button>
+      </motion.button>
     </section>
   );
 };

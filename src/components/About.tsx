@@ -1,101 +1,186 @@
 
 import { Code, Palette, Zap, Users } from "lucide-react";
+import { motion } from "framer-motion";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 const About = () => {
   const [ref, isVisible] = useIntersectionObserver(0.2);
   
   const skills = [
-    { name: "React", level: 90 },
-    { name: "TypeScript", level: 85 },
-    { name: "Tailwind CSS", level: 88 },
-    { name: "JavaScript", level: 92 },
-    { name: "HTML/CSS", level: 95 },
-    { name: "Node.js", level: 75 },
+    { name: "React", level: 90, color: "from-blue-500 to-cyan-500" },
+    { name: "TypeScript", level: 85, color: "from-blue-600 to-blue-400" },
+    { name: "Tailwind CSS", level: 88, color: "from-teal-500 to-green-500" },
+    { name: "JavaScript", level: 92, color: "from-yellow-500 to-orange-500" },
+    { name: "HTML/CSS", level: 95, color: "from-orange-500 to-red-500" },
+    { name: "Node.js", level: 75, color: "from-green-600 to-green-400" },
   ];
 
   const features = [
     {
       icon: Code,
       title: "Clean Code",
-      description: "I write maintainable, scalable, and well-documented code following best practices."
+      description: "I write maintainable, scalable, and well-documented code following best practices.",
+      gradient: "from-purple-500 to-blue-500"
     },
     {
       icon: Palette,
       title: "UI/UX Design",
-      description: "Creating beautiful and intuitive user interfaces with attention to detail."
+      description: "Creating beautiful and intuitive user interfaces with attention to detail.",
+      gradient: "from-pink-500 to-purple-500"
     },
     {
       icon: Zap,
       title: "Performance",
-      description: "Optimizing applications for speed and efficiency across all devices."
+      description: "Optimizing applications for speed and efficiency across all devices.",
+      gradient: "from-yellow-500 to-orange-500"
     },
     {
       icon: Users,
       title: "Collaboration",
-      description: "Working effectively in teams using Git, Agile methodologies, and modern tools."
+      description: "Working effectively in teams using Git, Agile methodologies, and modern tools.",
+      gradient: "from-green-500 to-teal-500"
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
-    <section id="about" className="py-20 px-4" ref={ref}>
-      <div className="max-w-7xl mx-auto">
-        <div className={`text-center mb-16 transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+    <section id="about" className="py-20 px-4 relative overflow-hidden" ref={ref}>
+      {/* Background decorations */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/50 to-transparent" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        <motion.div 
+          className="text-center mb-16"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isVisible ? "visible" : "hidden"}
+        >
+          <motion.h2 
+            className="text-4xl md:text-5xl font-bold text-white mb-4"
+            variants={itemVariants}
+          >
             About <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Me</span>
-          </h2>
-          <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+          </motion.h2>
+          <motion.p 
+            className="text-xl text-slate-400 max-w-3xl mx-auto"
+            variants={itemVariants}
+          >
             Passionate frontend developer with 3+ years of experience creating amazing web experiences
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
-          <div className={`transition-all duration-1000 transform ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-12 opacity-0'}`} style={{ transitionDelay: '0.2s' }}>
-            <h3 className="text-2xl font-semibold text-white mb-6">My Journey</h3>
-            <p className="text-slate-300 mb-6 leading-relaxed">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+          >
+            <motion.h3 
+              className="text-2xl font-semibold text-white mb-6"
+              variants={itemVariants}
+            >
+              My Journey
+            </motion.h3>
+            <motion.p 
+              className="text-slate-300 mb-6 leading-relaxed"
+              variants={itemVariants}
+            >
               I started my journey in web development 3 years ago and have been passionate about 
               creating beautiful, functional websites ever since. I love turning complex problems 
               into simple, elegant solutions.
-            </p>
-            <p className="text-slate-300 mb-6 leading-relaxed">
+            </motion.p>
+            <motion.p 
+              className="text-slate-300 mb-8 leading-relaxed"
+              variants={itemVariants}
+            >
               When I'm not coding, you can find me exploring new technologies, contributing to 
               open-source projects, or sharing knowledge with the developer community.
-            </p>
+            </motion.p>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
               {skills.map((skill, index) => (
-                <div key={skill.name} className={`transition-all duration-1000 transform ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'}`} style={{ transitionDelay: `${0.4 + index * 0.1}s` }}>
-                  <div className="flex justify-between text-sm text-slate-300 mb-2">
-                    <span>{skill.name}</span>
-                    <span>{skill.level}%</span>
+                <motion.div 
+                  key={skill.name}
+                  variants={itemVariants}
+                  className="group"
+                >
+                  <div className="flex justify-between text-sm text-slate-300 mb-3">
+                    <span className="font-medium">{skill.name}</span>
+                    <span className="text-slate-400">{skill.level}%</span>
                   </div>
-                  <div className="w-full bg-slate-700 rounded-full h-2">
-                    <div
-                      className={`bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-1500 ease-out ${isVisible ? 'opacity-100' : 'opacity-0'}`}
-                      style={{ 
-                        width: isVisible ? `${skill.level}%` : '0%',
-                        transitionDelay: `${0.6 + index * 0.1}s`
+                  <div className="w-full bg-slate-800 rounded-full h-3 overflow-hidden">
+                    <motion.div
+                      className={`h-full bg-gradient-to-r ${skill.color} rounded-full`}
+                      initial={{ width: 0 }}
+                      animate={isVisible ? { width: `${skill.level}%` } : { width: 0 }}
+                      transition={{ 
+                        duration: 1.5, 
+                        delay: index * 0.1,
+                        ease: "easeOut"
                       }}
-                    ></div>
+                    />
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          <div className={`grid sm:grid-cols-2 gap-6 transition-all duration-1000 transform ${isVisible ? 'translate-x-0 opacity-100' : 'translate-x-12 opacity-0'}`} style={{ transitionDelay: '0.4s' }}>
+          <motion.div 
+            className="grid sm:grid-cols-2 gap-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+          >
             {features.map((feature, index) => (
-              <div
+              <motion.div
                 key={feature.title}
-                className={`bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-slate-700 hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
-                style={{ transitionDelay: `${0.6 + index * 0.1}s` }}
+                className="group relative bg-slate-800/30 backdrop-blur-sm p-6 rounded-2xl border border-slate-700/50 overflow-hidden"
+                variants={itemVariants}
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
+                }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
-                <feature.icon className="w-12 h-12 text-purple-400 mb-4" />
-                <h4 className="text-lg font-semibold text-white mb-2">{feature.title}</h4>
-                <p className="text-slate-400 text-sm">{feature.description}</p>
-              </div>
+                <motion.div
+                  className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10`}
+                  transition={{ duration: 0.3 }}
+                />
+                <motion.div
+                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-4`}
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <feature.icon className="w-6 h-6 text-white" />
+                </motion.div>
+                <h4 className="text-lg font-semibold text-white mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-purple-400 group-hover:to-pink-400 transition-all duration-300">
+                  {feature.title}
+                </h4>
+                <p className="text-slate-400 text-sm leading-relaxed">{feature.description}</p>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
