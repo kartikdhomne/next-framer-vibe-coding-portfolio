@@ -1,7 +1,10 @@
 
 import { ExternalLink, Github } from "lucide-react";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 const Projects = () => {
+  const [ref, isVisible] = useIntersectionObserver(0.1);
+  
   const projects = [
     {
       title: "E-Commerce Platform",
@@ -38,9 +41,9 @@ const Projects = () => {
   ];
 
   return (
-    <section id="projects" className="py-20 px-4 bg-slate-900/50">
+    <section id="projects" className="py-20 px-4 bg-slate-900/50" ref={ref}>
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
+        <div className={`text-center mb-16 transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             My <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Projects</span>
           </h2>
@@ -53,7 +56,8 @@ const Projects = () => {
           {projects.map((project, index) => (
             <div
               key={project.title}
-              className="bg-slate-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-slate-700 hover:border-purple-500/50 transition-all duration-300 group hover:transform hover:scale-[1.02]"
+              className={`bg-slate-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-slate-700 hover:border-purple-500/50 transition-all duration-300 group hover:transform hover:scale-[1.02] ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}
+              style={{ transitionDelay: `${index * 0.2}s` }}
             >
               <div className="relative overflow-hidden">
                 <img
