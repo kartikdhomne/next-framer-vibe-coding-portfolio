@@ -2,9 +2,62 @@
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter } from "lucide-react";
 import { motion } from "framer-motion";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
   const [ref, isVisible] = useIntersectionObserver(0.2);
+  const { toast } = useToast();
+  
+  // Form state
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    subject: "",
+    message: ""
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.email || !formData.message) {
+      toast({
+        title: "Missing Information",
+        description: "Please provide your email and message.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Display the received message
+    toast({
+      title: "Message Received!",
+      description: `From: ${formData.email}\nMessage: ${formData.message.substring(0, 100)}${formData.message.length > 100 ? '...' : ''}`,
+    });
+
+    console.log("Message received from:", formData.email);
+    console.log("Full message:", formData.message);
+    console.log("Sender name:", `${formData.firstName} ${formData.lastName}`);
+    console.log("Subject:", formData.subject);
+
+    // Reset form
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      subject: "",
+      message: ""
+    });
+  };
 
   const contactInfo = [
     {
@@ -181,6 +234,7 @@ const Contact = () => {
             <motion.form 
               className="space-y-6"
               variants={itemVariants}
+              onSubmit={handleSubmit}
             >
               <div className="grid sm:grid-cols-2 gap-4">
                 <motion.div variants={itemVariants}>
@@ -189,6 +243,9 @@ const Contact = () => {
                   </label>
                   <input
                     type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
                     placeholder="John"
                   />
@@ -199,6 +256,9 @@ const Contact = () => {
                   </label>
                   <input
                     type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
                     placeholder="Doe"
                   />
@@ -211,8 +271,12 @@ const Contact = () => {
                 </label>
                 <input
                   type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
                   placeholder="john@example.com"
+                  required
                 />
               </motion.div>
               
@@ -222,6 +286,9 @@ const Contact = () => {
                 </label>
                 <input
                   type="text"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
                   placeholder="Project Inquiry"
                 />
@@ -233,8 +300,12 @@ const Contact = () => {
                 </label>
                 <textarea
                   rows={5}
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300 resize-none"
                   placeholder="Tell me about your project..."
+                  required
                 />
               </motion.div>
               

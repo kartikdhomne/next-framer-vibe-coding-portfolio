@@ -7,6 +7,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Loading from "@/components/Loading";
+import { Toaster } from "@/components/ui/toaster";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,6 +30,7 @@ const Index = () => {
       <Projects />
       <Contact />
       <Footer />
+      <Toaster />
     </div>
   );
 };
