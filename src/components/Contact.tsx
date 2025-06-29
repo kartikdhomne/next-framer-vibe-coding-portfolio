@@ -1,5 +1,13 @@
-
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Github,
+  Linkedin,
+  Twitter,
+  XIcon,
+  LucideTwitter,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
@@ -10,45 +18,23 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email",
-      value: "alex@example.com",
-      href: "mailto:alex@example.com",
-      gradient: "from-red-500 to-orange-500"
+      value: "kartikdhomne1997@gmail.com",
+      href: "mailto:kartikdhomne1997@gmail.com",
+      gradient: "from-red-500 to-orange-500",
     },
     {
       icon: Phone,
       title: "Phone",
-      value: "+1 (555) 123-4567",
-      href: "tel:+15551234567",
-      gradient: "from-green-500 to-teal-500"
+      value: "+91 8208463693",
+      href: "tel:+91 8208463693",
+      gradient: "from-green-500 to-teal-500",
     },
     {
       icon: MapPin,
       title: "Location",
-      value: "San Francisco, CA",
-      href: "#",
-      gradient: "from-blue-500 to-purple-500"
-    }
-  ];
-
-  const socialLinks = [
-    {
-      icon: Github,
-      name: "GitHub",
-      href: "https://github.com",
-      color: "hover:bg-slate-700"
+      value: "Nagpur, Maharashtra, India",
+      gradient: "from-blue-500 to-purple-500",
     },
-    {
-      icon: Linkedin,
-      name: "LinkedIn",
-      href: "https://linkedin.com",
-      color: "hover:bg-blue-600"
-    },
-    {
-      icon: Twitter,
-      name: "Twitter",
-      href: "https://twitter.com",
-      color: "hover:bg-sky-600"
-    }
   ];
 
   const containerVariants = {
@@ -56,9 +42,9 @@ const Contact = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
@@ -68,13 +54,17 @@ const Contact = () => {
       opacity: 1,
       transition: {
         duration: 0.6,
-        ease: [0.6, -0.05, 0.01, 0.99]
-      }
-    }
+        ease: [0.6, -0.05, 0.01, 0.99],
+      },
+    },
   };
 
   return (
-    <section id="contact" className="py-20 px-4 relative overflow-hidden" ref={ref}>
+    <section
+      id="contact"
+      className="py-20 px-4 relative overflow-hidden"
+      ref={ref}
+    >
       {/* Background decorations */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-transparent" />
       <motion.div
@@ -86,28 +76,32 @@ const Contact = () => {
         transition={{
           duration: 8,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: "easeInOut",
         }}
       />
-      
+
       <div className="max-w-4xl mx-auto relative z-10">
-        <motion.div 
+        <motion.div
           className="text-center mb-16"
           variants={containerVariants}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
         >
-          <motion.h2 
+          <motion.h2
             className="text-4xl md:text-5xl font-bold text-white mb-4"
             variants={itemVariants}
           >
-            Get In <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Touch</span>
+            Get In{" "}
+            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              Touch
+            </span>
           </motion.h2>
-          <motion.p 
+          <motion.p
             className="text-xl text-slate-400 max-w-2xl mx-auto"
             variants={itemVariants}
           >
-            Let's work together to bring your ideas to life. I'm always open to discussing new opportunities.
+            Let's work together to bring your ideas to life. I'm always open to
+            discussing new opportunities.
           </motion.p>
         </motion.div>
 
@@ -118,13 +112,13 @@ const Contact = () => {
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
           >
-            <motion.h3 
+            <motion.h3
               className="text-2xl font-semibold text-white mb-8"
               variants={itemVariants}
             >
               Contact Information
             </motion.h3>
-            
+
             <div className="space-y-6 mb-8">
               {contactInfo.map((item, index) => (
                 <motion.a
@@ -134,42 +128,20 @@ const Contact = () => {
                   variants={itemVariants}
                   whileHover={{ scale: 1.02, x: 10 }}
                 >
-                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${item.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                  <div
+                    className={`w-12 h-12 rounded-lg bg-gradient-to-br ${item.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
+                  >
                     <item.icon className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="text-slate-300 text-sm font-medium">{item.title}</h4>
+                    <h4 className="text-slate-300 text-sm font-medium">
+                      {item.title}
+                    </h4>
                     <p className="text-white font-semibold">{item.value}</p>
                   </div>
                 </motion.a>
               ))}
             </div>
-
-            <motion.div variants={itemVariants}>
-              <h4 className="text-lg font-semibold text-white mb-4">Follow Me</h4>
-              <div className="flex space-x-4">
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`p-3 bg-slate-800/50 backdrop-blur-sm rounded-full border border-slate-700 transition-all duration-300 ${social.color}`}
-                    whileHover={{ 
-                      scale: 1.1,
-                      y: -5,
-                      boxShadow: "0 10px 30px rgba(139, 92, 246, 0.3)"
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 + index * 0.1 }}
-                  >
-                    <social.icon className="w-5 h-5 text-slate-300" />
-                  </motion.a>
-                ))}
-              </div>
-            </motion.div>
           </motion.div>
 
           {/* Contact Form */}
@@ -178,10 +150,7 @@ const Contact = () => {
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
           >
-            <motion.form 
-              className="space-y-6"
-              variants={itemVariants}
-            >
+            <motion.form className="space-y-6" variants={itemVariants}>
               <div className="grid sm:grid-cols-2 gap-4">
                 <motion.div variants={itemVariants}>
                   <label className="block text-slate-300 text-sm font-medium mb-2">
@@ -204,7 +173,7 @@ const Contact = () => {
                   />
                 </motion.div>
               </div>
-              
+
               <motion.div variants={itemVariants}>
                 <label className="block text-slate-300 text-sm font-medium mb-2">
                   Email
@@ -215,7 +184,7 @@ const Contact = () => {
                   placeholder="john@example.com"
                 />
               </motion.div>
-              
+
               <motion.div variants={itemVariants}>
                 <label className="block text-slate-300 text-sm font-medium mb-2">
                   Subject
@@ -226,7 +195,7 @@ const Contact = () => {
                   placeholder="Project Inquiry"
                 />
               </motion.div>
-              
+
               <motion.div variants={itemVariants}>
                 <label className="block text-slate-300 text-sm font-medium mb-2">
                   Message
@@ -237,7 +206,7 @@ const Contact = () => {
                   placeholder="Tell me about your project..."
                 />
               </motion.div>
-              
+
               <motion.button
                 type="submit"
                 className="w-full py-4 px-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all duration-300"
