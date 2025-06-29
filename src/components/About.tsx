@@ -59,7 +59,7 @@ const About = () => {
       opacity: 1,
       transition: {
         duration: 0.6,
-        ease: [0.6, -0.05, 0.01, 0.99]
+        ease: "easeOut"
       }
     }
   };
@@ -137,7 +137,7 @@ const About = () => {
                       transition={{ 
                         duration: 1.5, 
                         delay: index * 0.1,
-                        ease: [0.6, -0.05, 0.01, 0.99]
+                        ease: "easeOut"
                       }}
                     />
                   </div>
