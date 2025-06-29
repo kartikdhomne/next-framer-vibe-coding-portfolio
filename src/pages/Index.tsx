@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import TechMarquee from "@/components/TechMarquee";
 import Projects from "@/components/Projects";
+import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Loading from "@/components/Loading";
+import { Toaster } from "@/components/ui/toaster";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,9 +32,15 @@ const Index = () => {
       <Navbar />
       <Hero />
       <About />
+      <TechMarquee />
       <Projects />
+      <Testimonials />
       <Contact />
       <Footer />
+<<<<<<< HEAD
+=======
+      <Toaster />
+>>>>>>> d92b6f6bd544f9857b63dde1ae1aa43c45bc92e4
     </div>
   );
 };
