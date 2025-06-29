@@ -1,3 +1,4 @@
+
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter } from "lucide-react";
 import { motion } from "framer-motion";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
@@ -156,8 +157,7 @@ const Contact = () => {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.6,
-        ease: [0.6, -0.05, 0.01, 0.99]
+        duration: 0.6
       }
     }
   };
