@@ -1,18 +1,17 @@
 import { Code, Palette, Zap, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
-import TechMarquee from "@/components/TechMarquee";
 
 const About = () => {
   const [ref, isVisible] = useIntersectionObserver(0.2);
 
   const skills = [
-    { name: "React", level: 90, color: "from-blue-500 to-cyan-500" },
-    { name: "TypeScript", level: 85, color: "from-blue-600 to-blue-400" },
-    { name: "Tailwind CSS", level: 88, color: "from-teal-500 to-green-500" },
-    { name: "JavaScript", level: 92, color: "from-yellow-500 to-orange-500" },
     { name: "HTML/CSS", level: 95, color: "from-orange-500 to-red-500" },
-    { name: "Node.js", level: 75, color: "from-green-600 to-green-400" },
+    { name: "JavaScript", level: 90, color: "from-yellow-500 to-orange-500" },
+    { name: "React", level: 90, color: "from-blue-500 to-cyan-500" },
+    { name: "Tailwind CSS", level: 85, color: "from-teal-500 to-green-500" },
+    { name: "Next.js", level: 75, color: "from-green-600 to-green-400" },
+    { name: "TypeScript", level: 75, color: "from-blue-600 to-blue-400" },
   ];
 
   const features = [
@@ -68,24 +67,6 @@ const About = () => {
     },
   };
 
-  const cardVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6
-      }
-    }
-  };
-
-  const skillSet = [
-    { name: "Frontend Development", icon: Code, color: "from-blue-500 to-cyan-500" },
-    { name: "UI/UX Design", icon: Palette, color: "from-purple-500 to-pink-500" },
-    { name: "Mobile Development", icon: Smartphone, color: "from-green-500 to-teal-500" },
-    { name: "Team Leadership", icon: Users, color: "from-orange-500 to-red-500" }
-  ];
-
   return (
     <section
       id="about"
@@ -120,7 +101,7 @@ const About = () => {
           </motion.p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+        <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -186,7 +167,7 @@ const About = () => {
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
           >
-            {skillSet.map((skill, index) => (
+            {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
                 className="group relative bg-slate-800/30 backdrop-blur-sm p-6 rounded-2xl border border-slate-700/50 overflow-hidden"
@@ -195,6 +176,7 @@ const About = () => {
                   scale: 1.05,
                   boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
                 }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
                 <motion.div
                   className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10`}
@@ -218,8 +200,6 @@ const About = () => {
           </motion.div>
         </div>
       </div>
-
-      <TechMarquee />
     </section>
   );
 };
