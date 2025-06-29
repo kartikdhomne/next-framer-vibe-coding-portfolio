@@ -143,16 +143,10 @@ const Contact = () => {
       y: 0,
       opacity: 1,
       transition: {
-<<<<<<< HEAD
         duration: 0.6,
         ease: [0.6, -0.05, 0.01, 0.99],
       },
     },
-=======
-        duration: 0.6
-      }
-    }
->>>>>>> d92b6f6bd544f9857b63dde1ae1aa43c45bc92e4
   };
 
   return (
@@ -246,15 +240,7 @@ const Contact = () => {
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
           >
-<<<<<<< HEAD
             <motion.form className="space-y-6" variants={itemVariants}>
-=======
-            <motion.form 
-              className="space-y-6"
-              variants={itemVariants}
-              onSubmit={handleSubmit}
-            >
->>>>>>> d92b6f6bd544f9857b63dde1ae1aa43c45bc92e4
               <div className="grid sm:grid-cols-2 gap-4">
                 <motion.div variants={itemVariants}>
                   <label className="block text-slate-300 text-sm font-medium mb-2">

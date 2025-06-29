@@ -19,16 +19,10 @@ const Hero = () => {
       y: 0,
       opacity: 1,
       transition: {
-<<<<<<< HEAD
         duration: 0.8,
         ease: [0.6, -0.05, 0.01, 0.99],
       },
     },
-=======
-        duration: 0.8
-      }
-    }
->>>>>>> d92b6f6bd544f9857b63dde1ae1aa43c45bc92e4
   };
 
   const typewriterVariants = {
@@ -36,16 +30,10 @@ const Hero = () => {
     visible: {
       width: "100%",
       transition: {
-<<<<<<< HEAD
         duration: 2,
         ease: "easeInOut",
       },
     },
-=======
-        duration: 2
-      }
-    }
->>>>>>> d92b6f6bd544f9857b63dde1ae1aa43c45bc92e4
   };
 
   const scrollToAbout = () => {
@@ -180,14 +168,8 @@ const Hero = () => {
               </motion.a>
             ))}
           </motion.div>
-<<<<<<< HEAD
 
           <motion.button
-=======
-          
-          <motion.button 
-            onClick={scrollToProjects}
->>>>>>> d92b6f6bd544f9857b63dde1ae1aa43c45bc92e4
             className="group relative px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-full overflow-hidden"
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}

@@ -37,10 +37,6 @@ const Index = () => {
       <Testimonials />
       <Contact />
       <Footer />
-<<<<<<< HEAD
-=======
-      <Toaster />
->>>>>>> d92b6f6bd544f9857b63dde1ae1aa43c45bc92e4
     </div>
   );
 };
