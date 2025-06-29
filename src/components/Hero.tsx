@@ -1,3 +1,4 @@
+
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -19,8 +20,7 @@ const Hero = () => {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.8,
-        ease: [0.6, -0.05, 0.01, 0.99]
+        duration: 0.8
       }
     }
   };
@@ -30,8 +30,7 @@ const Hero = () => {
     visible: {
       width: "100%",
       transition: {
-        duration: 2,
-        ease: "easeInOut"
+        duration: 2
       }
     }
   };
