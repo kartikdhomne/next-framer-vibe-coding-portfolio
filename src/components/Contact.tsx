@@ -1,30 +1,55 @@
 
-import { Mail, MapPin, Phone, Github, Linkedin, Twitter, Send } from "lucide-react";
-import { useState } from "react";
+import { Mail, Phone, MapPin, Github, Linkedin, Twitter } from "lucide-react";
 import { motion } from "framer-motion";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 const Contact = () => {
-  const [ref, isVisible] = useIntersectionObserver(0.1);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: ""
-  });
+  const [ref, isVisible] = useIntersectionObserver(0.2);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-    alert("Thank you for your message! I'll get back to you soon.");
-    setFormData({ name: "", email: "", message: "" });
-  };
+  const contactInfo = [
+    {
+      icon: Mail,
+      title: "Email",
+      value: "alex@example.com",
+      href: "mailto:alex@example.com",
+      gradient: "from-red-500 to-orange-500"
+    },
+    {
+      icon: Phone,
+      title: "Phone",
+      value: "+1 (555) 123-4567",
+      href: "tel:+15551234567",
+      gradient: "from-green-500 to-teal-500"
+    },
+    {
+      icon: MapPin,
+      title: "Location",
+      value: "San Francisco, CA",
+      href: "#",
+      gradient: "from-blue-500 to-purple-500"
+    }
+  ];
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const socialLinks = [
+    {
+      icon: Github,
+      name: "GitHub",
+      href: "https://github.com",
+      color: "hover:bg-slate-700"
+    },
+    {
+      icon: Linkedin,
+      name: "LinkedIn",
+      href: "https://linkedin.com",
+      color: "hover:bg-blue-600"
+    },
+    {
+      icon: Twitter,
+      name: "Twitter",
+      href: "https://twitter.com",
+      color: "hover:bg-sky-600"
+    }
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -43,20 +68,29 @@ const Contact = () => {
       opacity: 1,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
+        ease: [0.6, -0.05, 0.01, 0.99]
       }
     }
   };
 
   return (
     <section id="contact" className="py-20 px-4 relative overflow-hidden" ref={ref}>
-      {/* Background elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-0 w-96 h-96 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/2 w-80 h-80 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl" />
-      </div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
+      {/* Background decorations */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-transparent" />
+      <motion.div
+        className="absolute top-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.6, 0.3],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      
+      <div className="max-w-4xl mx-auto relative z-10">
         <motion.div 
           className="text-center mb-16"
           variants={containerVariants}
@@ -70,188 +104,152 @@ const Contact = () => {
             Get In <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Touch</span>
           </motion.h2>
           <motion.p 
-            className="text-xl text-slate-400 max-w-3xl mx-auto"
+            className="text-xl text-slate-400 max-w-2xl mx-auto"
             variants={itemVariants}
           >
-            I'm always interested in new opportunities and exciting projects. Let's create something amazing together!
+            Let's work together to bring your ideas to life. I'm always open to discussing new opportunities.
           </motion.p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid md:grid-cols-2 gap-12">
+          {/* Contact Information */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
           >
             <motion.h3 
-              className="text-2xl font-semibold text-white mb-6"
+              className="text-2xl font-semibold text-white mb-8"
               variants={itemVariants}
             >
-              Let's Talk
+              Contact Information
             </motion.h3>
-            <motion.p 
-              className="text-slate-300 mb-8 leading-relaxed"
-              variants={itemVariants}
-            >
-              Whether you have a project in mind, want to collaborate, or just want to say hello, 
-              I'd love to hear from you. Drop me a message and I'll get back to you as soon as possible.
-            </motion.p>
-
+            
             <div className="space-y-6 mb-8">
-              {[
-                { icon: Mail, title: "Email", value: "alex@example.com", color: "from-red-500 to-pink-500" },
-                { icon: Phone, title: "Phone", value: "+1 (555) 123-4567", color: "from-green-500 to-teal-500" },
-                { icon: MapPin, title: "Location", value: "San Francisco, CA", color: "from-blue-500 to-purple-500" }
-              ].map((contact, index) => (
-                <motion.div 
-                  key={contact.title}
-                  className="group flex items-center space-x-4 p-4 rounded-xl bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 hover:border-purple-500/30 transition-all duration-300"
+              {contactInfo.map((item, index) => (
+                <motion.a
+                  key={item.title}
+                  href={item.href}
+                  className="group flex items-center space-x-4 p-4 bg-slate-800/30 backdrop-blur-sm rounded-xl border border-slate-700/50 hover:border-purple-500/50 transition-all duration-300"
                   variants={itemVariants}
-                  whileHover={{ 
-                    scale: 1.02,
-                    boxShadow: "0 10px 30px rgba(139, 92, 246, 0.1)"
-                  }}
+                  whileHover={{ scale: 1.02, x: 10 }}
                 >
-                  <motion.div 
-                    className={`p-3 bg-gradient-to-r ${contact.color} rounded-xl`}
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <contact.icon className="w-6 h-6 text-white" />
-                  </motion.div>
-                  <div>
-                    <h4 className="text-white font-medium group-hover:text-purple-400 transition-colors">
-                      {contact.title}
-                    </h4>
-                    <p className="text-slate-400">{contact.value}</p>
+                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${item.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                    <item.icon className="w-6 h-6 text-white" />
                   </div>
-                </motion.div>
+                  <div>
+                    <h4 className="text-slate-300 text-sm font-medium">{item.title}</h4>
+                    <p className="text-white font-semibold">{item.value}</p>
+                  </div>
+                </motion.a>
               ))}
             </div>
 
             <motion.div variants={itemVariants}>
-              <h4 className="text-white font-medium mb-4">Follow Me</h4>
+              <h4 className="text-lg font-semibold text-white mb-4">Follow Me</h4>
               <div className="flex space-x-4">
-                {[
-                  { icon: Github, href: "https://github.com", color: "hover:bg-slate-700" },
-                  { icon: Linkedin, href: "https://linkedin.com", color: "hover:bg-blue-600" },
-                  { icon: Twitter, href: "https://twitter.com", color: "hover:bg-cyan-600" }
-                ].map((social, index) => (
+                {socialLinks.map((social, index) => (
                   <motion.a
-                    key={index}
+                    key={social.name}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-3 bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 transition-all duration-300 ${social.color}`}
+                    className={`p-3 bg-slate-800/50 backdrop-blur-sm rounded-full border border-slate-700 transition-all duration-300 ${social.color}`}
                     whileHover={{ 
                       scale: 1.1,
-                      y: -3,
-                      boxShadow: "0 10px 25px rgba(0,0,0,0.2)"
+                      y: -5,
+                      boxShadow: "0 10px 30px rgba(139, 92, 246, 0.3)"
                     }}
                     whileTap={{ scale: 0.95 }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8 + index * 0.1 }}
+                    transition={{ delay: 0.6 + index * 0.1 }}
                   >
-                    <social.icon className="w-6 h-6 text-slate-300" />
+                    <social.icon className="w-5 h-5 text-slate-300" />
                   </motion.a>
                 ))}
               </div>
             </motion.div>
           </motion.div>
 
-          <motion.div 
-            className="bg-slate-800/30 backdrop-blur-sm p-8 rounded-2xl border border-slate-700/50 relative overflow-hidden"
-            variants={itemVariants}
+          {/* Contact Form */}
+          <motion.div
+            variants={containerVariants}
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
           >
-            {/* Form background decoration */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-pink-500/5" />
-            
-            <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-              {[
-                { name: "name", type: "text", placeholder: "Your Name", label: "Name" },
-                { name: "email", type: "email", placeholder: "your.email@example.com", label: "Email" }
-              ].map((field, index) => (
-                <motion.div 
-                  key={field.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                >
-                  <label htmlFor={field.name} className="block text-sm font-medium text-slate-300 mb-2">
-                    {field.label}
+            <motion.form 
+              className="space-y-6"
+              variants={itemVariants}
+            >
+              <div className="grid sm:grid-cols-2 gap-4">
+                <motion.div variants={itemVariants}>
+                  <label className="block text-slate-300 text-sm font-medium mb-2">
+                    First Name
                   </label>
-                  <motion.input
-                    type={field.type}
-                    id={field.name}
-                    name={field.name}
-                    value={formData[field.name as keyof typeof formData]}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300 backdrop-blur-sm"
-                    placeholder={field.placeholder}
-                    whileFocus={{ scale: 1.02 }}
+                  <input
+                    type="text"
+                    className="w-full px-4 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
+                    placeholder="John"
                   />
                 </motion.div>
-              ))}
+                <motion.div variants={itemVariants}>
+                  <label className="block text-slate-300 text-sm font-medium mb-2">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full px-4 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
+                    placeholder="Doe"
+                  />
+                </motion.div>
+              </div>
               
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 }}
-              >
-                <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-2">
+              <motion.div variants={itemVariants}>
+                <label className="block text-slate-300 text-sm font-medium mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  className="w-full px-4 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
+                  placeholder="john@example.com"
+                />
+              </motion.div>
+              
+              <motion.div variants={itemVariants}>
+                <label className="block text-slate-300 text-sm font-medium mb-2">
+                  Subject
+                </label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
+                  placeholder="Project Inquiry"
+                />
+              </motion.div>
+              
+              <motion.div variants={itemVariants}>
+                <label className="block text-slate-300 text-sm font-medium mb-2">
                   Message
                 </label>
-                <motion.textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={6}
-                  className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300 resize-none backdrop-blur-sm"
+                <textarea
+                  rows={5}
+                  className="w-full px-4 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300 resize-none"
                   placeholder="Tell me about your project..."
-                  whileFocus={{ scale: 1.02 }}
                 />
               </motion.div>
               
               <motion.button
                 type="submit"
-                className="group w-full px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-xl relative overflow-hidden"
+                className="w-full py-4 px-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all duration-300"
+                variants={itemVariants}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
               >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: 0 }}
-                  transition={{ duration: 0.3 }}
-                />
-                <span className="relative z-10 flex items-center justify-center space-x-2">
-                  <Send className="w-5 h-5" />
-                  <span>Send Message</span>
-                </span>
+                Send Message
               </motion.button>
-            </form>
+            </motion.form>
           </motion.div>
         </div>
-
-        <motion.div 
-          className="mt-16 pt-8 border-t border-slate-800 text-center"
-          variants={itemVariants}
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
-        >
-          <p className="text-slate-400">
-            © 2024 Alex Portfolio. Built with React, TypeScript, Framer Motion and Tailwind CSS.
-          </p>
-        </motion.div>
       </div>
     </section>
   );

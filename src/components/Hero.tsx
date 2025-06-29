@@ -21,7 +21,7 @@ const Hero = () => {
       opacity: 1,
       transition: {
         duration: 0.8,
-        ease: "easeOut"
+        ease: [0.6, -0.05, 0.01, 0.99]
       }
     }
   };
@@ -165,15 +165,19 @@ const Hero = () => {
         </div>
       </motion.div>
       
-      <motion.button
-        onClick={scrollToAbout}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+      <motion.div
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
-        whileHover={{ scale: 1.2 }}
       >
-        <ChevronDown className="w-8 h-8 text-slate-400 hover:text-white transition-colors duration-200" />
-      </motion.button>
+        <motion.button
+          onClick={scrollToAbout}
+          className="p-2 rounded-full hover:bg-slate-800/30 transition-all duration-200"
+          whileHover={{ scale: 1.2 }}
+        >
+          <ChevronDown className="w-8 h-8 text-slate-400 hover:text-white transition-colors duration-200" />
+        </motion.button>
+      </motion.div>
     </section>
   );
 };
