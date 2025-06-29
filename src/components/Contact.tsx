@@ -1,4 +1,3 @@
-
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter } from "lucide-react";
 import { motion } from "framer-motion";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
@@ -8,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 const Contact = () => {
   const [ref, isVisible] = useIntersectionObserver(0.2);
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   // Form state
   const [formData, setFormData] = useState({
@@ -26,7 +26,28 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const sendEmail = async (formData: any) => {
+    // Using EmailJS service - you'll need to set up an account at emailjs.com
+    // For now, I'm simulating the email send
+    const emailContent = {
+      to_email: "alex@example.com", // Your email
+      from_name: `${formData.firstName} ${formData.lastName}`,
+      from_email: formData.email,
+      subject: formData.subject || "New Contact Form Message",
+      message: formData.message,
+      reply_to: formData.email
+    };
+
+    // Simulate API call - replace with actual email service
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // Simulate success/failure
+        Math.random() > 0.1 ? resolve(emailContent) : reject(new Error("Failed to send"));
+      }, 2000);
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.email || !formData.message) {
@@ -38,25 +59,40 @@ const Contact = () => {
       return;
     }
 
-    // Display the received message
-    toast({
-      title: "Message Received!",
-      description: `From: ${formData.email}\nMessage: ${formData.message.substring(0, 100)}${formData.message.length > 100 ? '...' : ''}`,
-    });
+    setIsSubmitting(true);
 
-    console.log("Message received from:", formData.email);
-    console.log("Full message:", formData.message);
-    console.log("Sender name:", `${formData.firstName} ${formData.lastName}`);
-    console.log("Subject:", formData.subject);
+    try {
+      await sendEmail(formData);
+      
+      toast({
+        title: "Message Sent Successfully!",
+        description: "Thank you for reaching out. I'll get back to you soon.",
+      });
 
-    // Reset form
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      subject: "",
-      message: ""
-    });
+      console.log("Email sent successfully!");
+      console.log("Sender:", `${formData.firstName} ${formData.lastName}`);
+      console.log("Email:", formData.email);
+      console.log("Subject:", formData.subject);
+      console.log("Message:", formData.message);
+
+      // Reset form
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        subject: "",
+        message: ""
+      });
+    } catch (error) {
+      console.error("Failed to send email:", error);
+      toast({
+        title: "Failed to Send Message",
+        description: "There was an error sending your message. Please try again or contact me directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -248,6 +284,7 @@ const Contact = () => {
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
                     placeholder="John"
+                    disabled={isSubmitting}
                   />
                 </motion.div>
                 <motion.div variants={itemVariants}>
@@ -261,6 +298,7 @@ const Contact = () => {
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
                     placeholder="Doe"
+                    disabled={isSubmitting}
                   />
                 </motion.div>
               </div>
@@ -277,6 +315,7 @@ const Contact = () => {
                   className="w-full px-4 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
                   placeholder="john@example.com"
                   required
+                  disabled={isSubmitting}
                 />
               </motion.div>
               
@@ -291,6 +330,7 @@ const Contact = () => {
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
                   placeholder="Project Inquiry"
+                  disabled={isSubmitting}
                 />
               </motion.div>
               
@@ -306,17 +346,19 @@ const Contact = () => {
                   className="w-full px-4 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300 resize-none"
                   placeholder="Tell me about your project..."
                   required
+                  disabled={isSubmitting}
                 />
               </motion.div>
               
               <motion.button
                 type="submit"
-                className="w-full py-4 px-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all duration-300"
+                disabled={isSubmitting}
+                className="w-full py-4 px-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 variants={itemVariants}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
               >
-                Send Message
+                {isSubmitting ? "Sending..." : "Send Message"}
               </motion.button>
             </motion.form>
           </motion.div>

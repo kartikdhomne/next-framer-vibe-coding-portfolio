@@ -1,4 +1,3 @@
-
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -41,6 +40,13 @@ const Hero = () => {
     const aboutSection = document.getElementById("about");
     if (aboutSection) {
       aboutSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const scrollToProjects = () => {
+    const projectsSection = document.getElementById("projects");
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -149,6 +155,7 @@ const Hero = () => {
           </motion.div>
           
           <motion.button 
+            onClick={scrollToProjects}
             className="group relative px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-full overflow-hidden"
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}
