@@ -60,6 +60,9 @@ const Footer = () => {
             </h3>
             <p className="text-slate-400 text-sm">
               Frontend Developer crafting beautiful web experiences
+              <br /> with NextJs, ReactJs, TailwindCSS, Javascript, Framer
+              <br />
+              Motion and more.
             </p>
           </motion.div>
 
@@ -116,8 +119,6 @@ const Footer = () => {
           <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
             <div className="flex items-center space-x-4 text-xs text-slate-500">
               <span>Built with React & Tailwind CSS</span>
-              <span className="hidden sm:inline">•</span>
-              <span className="hidden sm:inline">Powered by Framer Motion</span>
             </div>
             <motion.div
               className="w-32 h-px bg-gradient-to-r from-purple-500 to-pink-500"

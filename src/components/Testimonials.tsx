@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { Star, Quote } from "lucide-react";
@@ -8,32 +7,31 @@ const Testimonials = () => {
 
   const testimonials = [
     {
-      name: "Sarah Johnson",
-      role: "CEO, TechStart Inc.",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b524?w=150&h=150&fit=crop&crop=face",
-      content: "Alex delivered an exceptional website that exceeded our expectations. The attention to detail and user experience is outstanding.",
-      rating: 5
+      name: "Saravan Krishna",
+      role: "Developer, Freelancer",
+      image:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+      content:
+        "Kartik delivered an exceptional website that exceeded our expectations. The attention to detail and user experience is outstanding.",
+      rating: 5,
     },
     {
-      name: "Michael Chen",
-      role: "Product Manager, InnovateCorp",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-      content: "Working with Alex was a game-changer for our project. Professional, creative, and incredibly skilled. Highly recommended!",
-      rating: 5
+      name: "Priyank Soni",
+      role: "Developer, Numerologist",
+      image:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+      content:
+        "Working with Kartik was a game-changer for our project. Professional, creative, and incredibly skilled. Highly recommended!",
+      rating: 5,
     },
     {
-      name: "Emily Rodriguez",
-      role: "Founder, CreativeStudio",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-      content: "The quality of work and communication throughout the project was fantastic. Alex truly understands modern web development.",
-      rating: 5
-    },
-    {
-      name: "David Thompson",
-      role: "CTO, NextGen Solutions",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-      content: "Alex's technical expertise and creative vision brought our ideas to life perfectly. The final product was beyond our expectations.",
-      rating: 5
+      name: "Aditya Singh",
+      role: "Developer, Freelancer",
+      image:
+        "https://images.unsplash.com/photo-1756475394041-53bd65722fac?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      content:
+        "The quality of work and communication throughout the project was fantastic. Kartik truly understands modern web development.",
+      rating: 5,
     }
   ];
 
@@ -42,9 +40,9 @@ const Testimonials = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2
-      }
-    }
+        staggerChildren: 0.2,
+      },
+    },
   };
 
   const itemVariants = {
@@ -54,9 +52,9 @@ const Testimonials = () => {
       opacity: 1,
       transition: {
         duration: 0.6,
-        ease: [0.6, -0.05, 0.01, 0.99]
-      }
-    }
+        ease: [0.6, -0.05, 0.01, 0.99],
+      },
+    },
   };
 
   return (
@@ -72,27 +70,31 @@ const Testimonials = () => {
         transition={{
           duration: 8,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: "easeInOut",
         }}
       />
-      
+
       <div className="max-w-6xl mx-auto relative z-10">
-        <motion.div 
+        <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            What Clients <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Say</span>
+            What Clients
+            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              Say
+            </span>
           </h2>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-            Don't just take my word for it - here's what my clients have to say about working together
+            Don't just take my word for it - here's what my clients have to say
+            about working together
           </p>
         </motion.div>
 
         <motion.div
-          className="grid md:grid-cols-2 gap-8"
+          className="grid md:grid-cols-3 gap-8"
           variants={containerVariants}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
@@ -102,9 +104,9 @@ const Testimonials = () => {
               key={testimonial.name}
               className="group relative p-8 bg-slate-800/30 backdrop-blur-sm rounded-2xl border border-slate-700/50 hover:border-purple-500/50 transition-all duration-300"
               variants={itemVariants}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.02,
-                boxShadow: "0 20px 40px rgba(139, 92, 246, 0.1)"
+                boxShadow: "0 20px 40px rgba(139, 92, 246, 0.1)",
               }}
             >
               {/* Quote icon */}
@@ -122,7 +124,11 @@ const Testimonials = () => {
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, scale: 0 }}
-                    animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+                    animate={
+                      isVisible
+                        ? { opacity: 1, scale: 1 }
+                        : { opacity: 0, scale: 0 }
+                    }
                     transition={{ delay: 0.3 + i * 0.1 }}
                   >
                     <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
@@ -151,9 +157,7 @@ const Testimonials = () => {
                   <h4 className="text-white font-semibold">
                     {testimonial.name}
                   </h4>
-                  <p className="text-slate-400 text-sm">
-                    {testimonial.role}
-                  </p>
+                  <p className="text-slate-400 text-sm">{testimonial.role}</p>
                 </div>
               </div>
             </motion.div>
