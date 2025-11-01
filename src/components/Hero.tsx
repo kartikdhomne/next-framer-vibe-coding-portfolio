@@ -135,22 +135,26 @@ const Hero = () => {
               {
                 icon: Github,
                 href: "https://github.com/kartikdhomne",
+                label: "Github Icon",
                 color: "hover:bg-slate-700",
               },
               {
                 icon: Linkedin,
                 href: "https://linkedin.com/in/kartik-dhomne",
+                label: "Linkedin Icon",
                 color: "hover:bg-blue-600",
               },
               {
                 icon: Mail,
                 href: "mailto:kartikdhomne1997@google.com",
+                label: "Mail Icon",
                 color: "hover:bg-red-600",
               },
             ].map((social, index) => (
               <motion.a
                 key={index}
                 href={social.href}
+                aria-label={social.label}
                 target={social.icon !== Mail ? "_blank" : undefined}
                 rel={social.icon !== Mail ? "noopener noreferrer" : undefined}
                 className={`p-4 bg-slate-800/50 backdrop-blur-sm rounded-full border border-slate-700 transition-all duration-300 ${social.color}`}
@@ -164,7 +168,10 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 + index * 0.1 }}
               >
-                <social.icon className="w-6 h-6 text-slate-300" />
+                <social.icon
+                  className="w-6 h-6 text-slate-300"
+                  aria-hidden="true"
+                />
               </motion.a>
             ))}
           </motion.div>
@@ -179,6 +186,7 @@ const Hero = () => {
               className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600"
               initial={{ x: "-100%" }}
               whileHover={{ x: 0 }}
+              aria-label="Download Kartik's resume (PDF)"
               transition={{ duration: 0.3 }}
             />
             {/* <span className="relative z-10">Download Resume</span> */}
@@ -200,10 +208,14 @@ const Hero = () => {
       >
         <motion.button
           onClick={scrollToAbout}
+          aria-label="Scroll to About section"
           className="p-2 rounded-full hover:bg-slate-800/30 transition-all duration-200"
           whileHover={{ scale: 1.2 }}
         >
-          <ChevronDown className="w-8 h-8 text-slate-400 hover:text-white transition-colors duration-200" />
+          <ChevronDown
+            aria-hidden="true"
+            className="w-8 h-8 text-slate-400 hover:text-white transition-colors duration-200"
+          />
         </motion.button>
       </motion.div>
     </section>

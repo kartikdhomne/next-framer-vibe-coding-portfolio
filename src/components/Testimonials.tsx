@@ -81,12 +81,12 @@ const Testimonials = () => {
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             What Clients
             <span className="ml-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               Say
             </span>
-          </h2>
+          </h1>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto">
             Don't just take my word for it - here's what my clients have to say
             about working together
