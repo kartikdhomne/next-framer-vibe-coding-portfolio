@@ -134,7 +134,7 @@ const Contact = () => {
   };
 
   const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
+    hidden: { y: 30, opacity: 0.5 },
     visible: {
       y: 0,
       opacity: 1,
