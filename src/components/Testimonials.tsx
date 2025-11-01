@@ -83,7 +83,7 @@ const Testimonials = () => {
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             What Clients
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <span className="ml-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               Say
             </span>
           </h2>

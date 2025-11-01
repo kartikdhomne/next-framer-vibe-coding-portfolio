@@ -118,7 +118,7 @@ const Hero = () => {
           </motion.div>
 
           <motion.p
-            className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed"
+            className="mb-12 text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed"
             variants={itemVariants}
           >
             I create beautiful, responsive, and user-friendly web applications
@@ -128,7 +128,7 @@ const Hero = () => {
 
         <div className="mb-12">
           <motion.div
-            className="flex justify-center space-x-6 mb-8"
+            className="flex justify-center space-x-6 mb-12"
             variants={itemVariants}
           >
             {[

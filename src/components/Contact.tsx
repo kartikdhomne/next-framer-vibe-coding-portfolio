@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from "emailjs-com";
 
 const Contact = () => {
   const [ref, isVisible] = useIntersectionObserver(0.2);
@@ -39,7 +40,7 @@ const Contact = () => {
     // Using EmailJS service - you'll need to set up an account at emailjs.com
     // For now, I'm simulating the email send
     const emailContent = {
-      to_email: "alex@example.com", // Your email
+      to_email: "kartikdhomne1997@gmail.com", // Your email
       from_name: `${formData.firstName} ${formData.lastName}`,
       from_email: formData.email,
       subject: formData.subject || "New Contact Form Message",
@@ -51,54 +52,49 @@ const Contact = () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         // Simulate success/failure
-        Math.random() > 0.1 ? resolve(emailContent) : reject(new Error("Failed to send"));
+        Math.random() > 0.1
+          ? resolve(emailContent)
+          : reject(new Error("Failed to send"));
       }, 2000);
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!formData.email || !formData.message) {
-      toast({
-        title: "Missing Information",
-        description: "Please provide your email and message.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
-      await sendEmail(formData);
-      
+      await emailjs.send(
+        "service_85yfn9u", 
+        "template_0gr69ho",
+        {
+          from_name: `${formData.firstName} ${formData.lastName}`,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        },
+        "P1bYDjESIsTjN43Kh"
+      );
+
       toast({
-        title: "Message Sent Successfully!",
-        description: "Thank you for reaching out. I'll get back to you soon.",
+        title: "Message Sent!",
+        description: "I’ll get back to you soon.",
       });
 
-      console.log("Email sent successfully!");
-      console.log("Sender:", `${formData.firstName} ${formData.lastName}`);
-      console.log("Email:", formData.email);
-      console.log("Subject:", formData.subject);
-      console.log("Message:", formData.message);
-
-      // Reset form
       setFormData({
         firstName: "",
         lastName: "",
         email: "",
         subject: "",
-        message: ""
+        message: "",
       });
     } catch (error) {
-      console.error("Failed to send email:", error);
       toast({
-        title: "Failed to Send Message",
-        description: "There was an error sending your message. Please try again or contact me directly.",
+        title: "Error Sending Email",
+        description: "Please try again or contact me directly.",
         variant: "destructive",
       });
+      console.error(error);
     } finally {
       setIsSubmitting(false);
     }
@@ -240,7 +236,11 @@ const Contact = () => {
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
           >
-            <motion.form className="space-y-6" variants={itemVariants}>
+            <motion.form
+              className="space-y-6"
+              variants={itemVariants}
+              onSubmit={handleSubmit}
+            >
               <div className="grid sm:grid-cols-2 gap-4">
                 <motion.div variants={itemVariants}>
                   <label className="block text-slate-300 text-sm font-medium mb-2">
